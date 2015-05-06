@@ -13,6 +13,14 @@ namespace Eksamensopgave15
         protected DateTime date;
         protected int amount;
 
+        public Transaction(int id, User user, DateTime date, int amount)
+        {
+            this.id = id;
+            this.user = user;
+            this.date = date;
+            this.amount = amount;
+        }
+
         public override string ToString()
         {
             return "Transaction ID: " + id + "\nAmount: " + amount + "\nDate: " + date;
