@@ -5,3 +5,9 @@ C:\Users\Tutter\Documents\GitHub\Eksamensopgave15\bin\Debug\Eksamensopgave15.exe
 C:\Users\Tutter\Documents\GitHub\Eksamensopgave15\bin\Debug\Eksamensopgave15.pdb
 C:\Users\Tutter\Documents\GitHub\Eksamensopgave15\obj\Debug\Eksamensopgave15.exe
 C:\Users\Tutter\Documents\GitHub\Eksamensopgave15\obj\Debug\Eksamensopgave15.pdb
+C:\Users\TobiasW\Documents\GitHub\Exam\Eksamensopgave15\bin\Debug\Eksamensopgave15.exe.config
+C:\Users\TobiasW\Documents\GitHub\Exam\Eksamensopgave15\obj\Debug\Eksamensopgave15.csprojResolveAssemblyReference.cache
+C:\Users\TobiasW\Documents\GitHub\Exam\Eksamensopgave15\bin\Debug\Eksamensopgave15.exe
+C:\Users\TobiasW\Documents\GitHub\Exam\Eksamensopgave15\bin\Debug\Eksamensopgave15.pdb
+C:\Users\TobiasW\Documents\GitHub\Exam\Eksamensopgave15\obj\Debug\Eksamensopgave15.exe
+C:\Users\TobiasW\Documents\GitHub\Exam\Eksamensopgave15\obj\Debug\Eksamensopgave15.pdb

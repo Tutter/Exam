@@ -10,6 +10,11 @@ namespace Eksamensopgave15
     {
         private Product product;
 
+        public BuyTransaction(User user, Product product, int amount) : base(user, amount)
+        {
+            this.product = product;
+        }
+
         public override string ToString()
         {
             return "Buying product from user: " + user + "'s account" + "\n" + base.ToString();

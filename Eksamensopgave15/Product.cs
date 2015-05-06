@@ -10,9 +10,17 @@ namespace Eksamensopgave15
     {
         private int id;
         public string name { get; set; }
-        private int price;
+        public int price { get; set; }
         private bool active;
         private bool canBeBoughtOnCredit;
 
+        public Product(int id, string name, int price, bool active)
+        {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.active = active;
+            canBeBoughtOnCredit = false;
+        }
     }
 }

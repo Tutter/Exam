@@ -13,12 +13,12 @@ namespace Eksamensopgave15
         protected DateTime date;
         protected int amount;
 
-        public Transaction(int id, User user, DateTime date, int amount)
+        public Transaction(User user, int amount)
         {
-            this.id = id;
             this.user = user;
-            this.date = date;
             this.amount = amount;
+
+            date = DateTime.Now;
         }
 
         public override string ToString()

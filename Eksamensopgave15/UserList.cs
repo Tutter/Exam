@@ -9,13 +9,13 @@ namespace Eksamensopgave15
 {
     class UserList : IUserDataHandling
     {
-        private List<User> userList;
+        public List<User> users;
         private int nextId;
         enum AddUserReturns { success, emailInvalid, userNameInvalid, allInvalid };
 
         public UserList()
         {
-            userList = new List<User>();
+            users = new List<User>();
         }
 
         public int AddUser(string firstName, string lastName, string userName, string email)
@@ -30,7 +30,7 @@ namespace Eksamensopgave15
 
             if (emailIsValid == true && userNameIsValid == true)
             {
-                userList.Add(new User(id, firstName, lastName, userName, email));
+                users.Add(new User(id, firstName, lastName, userName, email));
                 return (int)AddUserReturns.success;
             }
 
@@ -45,12 +45,12 @@ namespace Eksamensopgave15
 
         private int GetNextUserId()
         {
-            if (userList.Count() == 0)
+            if (users.Count() == 0)
             {
                 return 1;
             }
 
-            return userList[userList.Count() - 1].id + 1;
+            return users[users.Count() - 1].id + 1;
         }
 
         //Found at http://stackoverflow.com/questions/1365407/c-sharp-code-to-validate-email-address
@@ -79,9 +79,19 @@ namespace Eksamensopgave15
             return false;
         }
 
+        public User GetUserByUserName(string userName)
+        {
+            foreach (User user in users)
+            {
+                if (user.userName == userName)
+                    return user;
+            }
+            throw new UserNotFoundException();
+        }
+
         public string ReadUser(string userName)
         {
-            foreach (User user in userList)
+            foreach (User user in users)
             {
                 if (user.userName == userName)
                     return "ID: " + user.id + "\nName: " + user.firstName + " " + user.lastName + "\nUsername: " + user.userName + "\nEmail: " + user.email;
