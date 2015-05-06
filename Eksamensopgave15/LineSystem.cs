@@ -49,9 +49,12 @@ namespace Eksamensopgave15
 
         }
 
-        public void GetActiveProducts()
+        public List<Product> GetActiveProducts()
         {
+            List<Product> activeProducts = new List<Product>();
+            activeProducts = productList.products.Where(product => product.active).ToList<Product>();
 
+            return activeProducts;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Eksamensopgave15
         private int id;
         public string name { get; set; }
         public int price { get; set; }
-        private bool active;
+        public bool active;
         private bool canBeBoughtOnCredit;
 
         public Product(int id, string name, int price, bool active)
