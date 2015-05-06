@@ -32,7 +32,7 @@ namespace Eksamensopgave15
             writer.WriteLine(transaction.ToString());
         }
 
-        public int GetNextId()
+        public int GetNextTransactionId()
         {
             string lastLine;
             string[] lineValues;
@@ -41,6 +41,22 @@ namespace Eksamensopgave15
             lineValues = lastLine.Split(' ');
 
             return Convert.ToInt32(lineValues[2]);
+        }
+
+        public List<String> GetTransactionsFromLog(int numOfTransactions, string userName)
+        {
+            int linesInFile = FindLengthOfFile();
+        }
+
+        private int FindLengthOfFile()
+        {
+            int count = 0;
+            StreamReader reader = new StreamReader(File.OpenRead(path));
+
+            while (!reader.EndOfStream)
+                count++;
+
+            return count;
         }
     }
 }
