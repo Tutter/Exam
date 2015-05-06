@@ -25,7 +25,7 @@ namespace Eksamensopgave15
             File.Create(path);
         }
 
-        public void WriteToFile(Transaction transaction)
+        public void WriteTransactionToFile(Transaction transaction)
         {
             StreamWriter writer = File.AppendText(path);
 
@@ -46,6 +46,21 @@ namespace Eksamensopgave15
         public List<String> GetTransactionsFromLog(int numOfTransactions, string userName)
         {
             int linesInFile = FindLengthOfFile();
+            int transactionsFound = 0;
+            string line;
+            int counter = 1;
+            List<String> transactions = new List<string>();
+
+
+            while (transactionsFound <= numOfTransactions && counter <= linesInFile)
+            {
+                line = File.ReadLines(path).Skip(linesInFile - counter).ToString();
+
+                if (line.Contains(userName))
+                    transactions.Add(line);
+            }
+
+            return transactions;
         }
 
         private int FindLengthOfFile()

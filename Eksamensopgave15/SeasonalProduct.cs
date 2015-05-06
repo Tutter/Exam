@@ -15,6 +15,7 @@ namespace Eksamensopgave15
             : base(id, name, price, active)
         {
             this.seasonStartDate = seasonStartDate;
+            //Make so date is checked to see if is larger or less than current date
         }
 
         public SeasonalProduct(int id, string name, int price, bool active, DateTime seasonEndDate)
