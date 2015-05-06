@@ -8,17 +8,21 @@ namespace Eksamensopgave15
 {
     class LineSystem
     {
-        public void BuyProduct()
+        public UserList userList;
+        public ProductList productList;
+        public TransactionLogging transactionLogging;
+
+        public void BuyProduct(User user, Product product)
         {
 
         }
 
-        public void AddCreditsToAccount()
+        public void AddCreditsToAccount(User user, int amount)
         {
 
         }
 
-        public void ExecuteTransaction()
+        public void ExecuteTransaction(Transaction transaction)
         {
 
         }

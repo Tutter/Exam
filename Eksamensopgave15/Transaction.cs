@@ -18,8 +18,6 @@ namespace Eksamensopgave15
             return "Transaction ID: " + id + "\nAmount: " + amount + "\nDate: " + date;
         }
 
-        public abstract void Execute()
-        {
-        }
+        public abstract void Execute();
     }
 }

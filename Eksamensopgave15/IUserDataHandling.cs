@@ -8,7 +8,7 @@ namespace Eksamensopgave15
 {
     interface IUserDataHandling
     {
-        void writeUserData();
-        void readUserData();
+        int AddUser(string firstName, string lastName, string userName, string email);
+        string ReadUser(string userName);
     }
 }

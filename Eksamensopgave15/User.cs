@@ -9,10 +9,10 @@ namespace Eksamensopgave15
     class User : IComparable
     {
         public int id { get; set; }
-        private string firstName;
-        private string lastName;
+        public string firstName { get; set; }
+        public string lastName { get; set; }
         public string userName { get; set; }
-        private string email;
+        public string email { get; set; }
         public int balance { get; set; }
 
         public User(int id, string firstName, string lastName, string userName, string email)
