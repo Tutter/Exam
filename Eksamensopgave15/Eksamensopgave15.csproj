@@ -45,6 +45,7 @@
     <Compile Include="InsertCashTransaction.cs" />
     <Compile Include="InsufficientCreditsException.cs" />
     <Compile Include="IUserDataHandling.cs" />
+    <Compile Include="LineSystem.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

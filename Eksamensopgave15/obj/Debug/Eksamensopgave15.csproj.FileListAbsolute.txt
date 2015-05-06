@@ -1,1 +1,2 @@
 c:\users\tobiasw\documents\visual studio 2013\Projects\Eksamensopgave15\Eksamensopgave15\bin\Debug\Eksamensopgave15.exe.config
+C:\Users\Tutter\Documents\GitHub\Eksamensopgave15\bin\Debug\Eksamensopgave15.exe.config
