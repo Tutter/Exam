@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Eksamensopgave15
 {
-    class UserList
+    class UserList : IUserDataHandling
     {
         private List<User> userList;
         private int nextId;
-        enum AddUserReturns { success, emailInvalid, userNameInvalid, allInvalid};
+        enum AddUserReturns { success, emailInvalid, userNameInvalid, allInvalid };
 
         public UserList()
         {
             userList = new List<User>();
         }
 
-        public int addUser(string firstName, string lastName, string userName, string email)
+        public int AddUser(string firstName, string lastName, string userName, string email)
         {
             int id;
             bool emailIsValid;
@@ -40,7 +40,7 @@ namespace Eksamensopgave15
             if (emailIsValid == false)
                 return (int)AddUserReturns.emailInvalid;
             else
-                return (int)AddUserReturns.userNameInvalid;    
+                return (int)AddUserReturns.userNameInvalid;
         }
 
         private int GetNextUserId()
@@ -71,12 +71,22 @@ namespace Eksamensopgave15
         private bool IsValidUsername(string userName)
         {
             Regex r = new Regex("^[a-zA-Z0-9]*$");
-            if (r.IsMatch(userName)) 
+            if (r.IsMatch(userName))
             {
                 return true;
             }
 
             return false;
+        }
+
+        public string ReadUser(string userName)
+        {
+            foreach (User user in userList)
+            {
+                if (user.userName == userName)
+                    return "ID: " + user.id + "\nName: " + user.firstName + " " + user.lastName + "\nUsername: " + user.userName + "\nEmail: " + user.email;
+            }
+            throw new UserNotFoundException();
         }
     }
 }
