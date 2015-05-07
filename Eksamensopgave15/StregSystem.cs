@@ -22,14 +22,18 @@ namespace Eksamensopgave15
         public void BuyProduct(User user, Product product)
         {
             Transaction transaction = new BuyTransaction(user, product, product.price);
+
+            ExecuteTransaction(transaction);
         }
 
         public void AddCreditsToAccount(User user, int amount)
         {
             Transaction transaction = new InsertCashTransaction(user, amount);
+            
+            ExecuteTransaction(transaction);
         }
 
-        public void ExecuteTransaction(Transaction transaction)
+        private void ExecuteTransaction(Transaction transaction)
         {
             transaction.Execute();
         }
