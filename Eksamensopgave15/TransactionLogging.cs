@@ -13,7 +13,7 @@ namespace Eksamensopgave15
 
         public TransactionLogging()
         {
-            string path = @"\Transaction_Log.txt";
+            this.path = @".\Transaction_Log.txt";
             if (!File.Exists(path))
             {
                 CreateLog();

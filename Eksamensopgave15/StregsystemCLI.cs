@@ -8,13 +8,26 @@ namespace Eksamensopgave15
 {
     class StregsystemCLI : IStregsystemUI
     {
-        Stregsystem stregsystem;
+        public Stregsystem stregsystem;
 
-        private void Start()
+        public StregsystemCLI()
         {
-
+            stregsystem = new Stregsystem();
         }
-    
+
+        public void Start()
+        {
+            DisplayProducts();
+        }
+
+        private void DisplayProducts()
+        {
+            foreach (Product product in stregsystem.GetActiveProducts())
+            {
+                Console.WriteLine(product.ToString());
+            }
+        }
+
         public void DisplayUserNotFound(string userName)
         {
             Console.WriteLine("The user: " + userName + " was not found");
@@ -27,27 +40,27 @@ namespace Eksamensopgave15
 
         public void DisplayUserInfo(string userName)
         {
- 	        throw new NotImplementedException();
+            Console.WriteLine(stregsystem.userList.GetUserByUserName(userName));
         }
 
         public void DisplayTooManyArgumentsError()
         {
- 	        throw new NotImplementedException();
+            Console.WriteLine("Too many arguments given");
         }
 
         public void DisplayAdminCommandNotFoundMessage()
         {
- 	        throw new NotImplementedException();
+            Console.WriteLine("That is not a valid admin command");
         }
 
         public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
- 	        throw new NotImplementedException();
+            Console.WriteLine("User: " + transaction.user.userName + " bought " + transaction.product.name);
         }
 
-        public void DisplayUserBuysProduct(int count)
+        public void DisplayUserBuysProduct(BuyTransaction transaction, int amount)
         {
- 	        throw new NotImplementedException();
+            Console.WriteLine("User: " + transaction.user.userName + " bought " + amount + " of " + transaction.product.name);
         }
 
         public void Close()
@@ -57,12 +70,12 @@ namespace Eksamensopgave15
 
         public void DisplayInsufficientCash()
         {
- 	        throw new NotImplementedException();
+            Console.WriteLine("User");
         }
 
         public void DisplayGeneralError(string errorString)
         {
- 	        throw new NotImplementedException();
+            Console.WriteLine("Error: " + errorString);
         }
     }
 }

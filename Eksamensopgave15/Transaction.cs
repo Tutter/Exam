@@ -9,21 +9,21 @@ namespace Eksamensopgave15
     abstract class Transaction
     {
         protected int id;
-        protected User user;
+        public User user { get; set; }
         protected DateTime date;
-        protected int amount;
+        public int price { get; set; }
 
-        public Transaction(User user, int amount)
+        public Transaction(User user, int price)
         {
             this.user = user;
-            this.amount = amount;
+            this.price = price;
 
             date = DateTime.Now;
         }
 
         public override string ToString()
         {
-            return "Transaction ID: " + id + "\nAmount: " + amount + "\nDate: " + date;
+            return "Transaction ID: " + id + "\nAmount: " + price + "\nDate: " + date;
         }
 
         public abstract void Execute();

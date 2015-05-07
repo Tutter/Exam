@@ -26,6 +26,13 @@ namespace Eksamensopgave15
             ExecuteTransaction(transaction);
         }
 
+        public void BuyProduct(User user, Product product, int amount)
+        {
+            Transaction transaction = new BuyTransaction(user, product, product.price, amount);
+
+            ExecuteTransaction(transaction);
+        }
+
         public void AddCreditsToAccount(User user, int amount)
         {
             Transaction transaction = new InsertCashTransaction(user, amount);

@@ -9,12 +9,12 @@ namespace Eksamensopgave15
     interface IStregsystemUI
     {
         void DisplayUserNotFound(string userName);
-        void DisplayProductNotFound();
-        void DisplayUserInfo();
+        void DisplayProductNotFound(int productId);
+        void DisplayUserInfo(string userName);
         void DisplayTooManyArgumentsError();
         void DisplayAdminCommandNotFoundMessage();
         void DisplayUserBuysProduct(BuyTransaction transaction);
-        void DisplayUserBuysProduct(int count, );
+        void DisplayUserBuysProduct(BuyTransaction transaction, int amount);
         void Close();
         void DisplayInsufficientCash();
         void DisplayGeneralError(string errorString);

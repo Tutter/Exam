@@ -22,5 +22,10 @@ namespace Eksamensopgave15
             this.active = active;
             canBeBoughtOnCredit = false;
         }
+
+        public override string ToString()
+        {
+            return id + "\t" + name + "\t" + price;
+        }
     }
 }

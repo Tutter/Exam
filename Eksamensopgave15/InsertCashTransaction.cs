@@ -21,7 +21,7 @@ namespace Eksamensopgave15
 
         public override void Execute()
         {
-            user.balance += amount;
+            user.balance += price;
         }
     }
 }

@@ -11,11 +11,17 @@ namespace Eksamensopgave15
         private DateTime seasonStartDate;
         private DateTime seasonEndDate;
 
-        public SeasonalProduct(int id, string name, int price, bool active, DateTime seasonStartDate)
+        public SeasonalProduct(int id, string name, int price, bool active, DateTime date)
             : base(id, name, price, active)
         {
-            this.seasonStartDate = seasonStartDate;
-            //Make so date is checked to see if is larger or less than current date
+            if (date > DateTime.Now)
+            {
+                seasonEndDate = date;
+            }
+            else
+            {
+                seasonStartDate = date;
+            }
         }
 
         public SeasonalProduct(int id, string name, int price, bool active, DateTime seasonStartDate, DateTime seasonEndDate)

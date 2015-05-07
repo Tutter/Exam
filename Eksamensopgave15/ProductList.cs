@@ -25,16 +25,14 @@ namespace Eksamensopgave15
             int price;
             bool activeProduct;
 
-            string path = Environment.CurrentDirectory;
-            StreamReader reader = new StreamReader(File.OpenRead(path));
-            List<Product> products = new List<Product>();
+            StreamReader reader = new StreamReader(@".\products.csv");
 
             reader.ReadLine();
 
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
-                string[] lineValues = line.Split(';');
+                string[] lineValues = RemoveHTMLTags(line).Split(';');
 
                 id = (Convert.ToInt32(lineValues[0]));
                 name = (lineValues[1]);
@@ -47,17 +45,12 @@ namespace Eksamensopgave15
 
                 products.Add(new Product(id, name, price, activeProduct));            
             }
-
-            RemoveHTMLTags();
         }
 
         //Found at http://www.dotnetperls.com/remove-html-tags
-        private void RemoveHTMLTags()
+        private string RemoveHTMLTags(string line)
         {
-            foreach (Product product in products)
-            {
-                Regex.Replace(product.name, "<.*?>", string.Empty);
-            }
+                return Regex.Replace(line, "<.*?>", string.Empty);
         }
     }
 }
