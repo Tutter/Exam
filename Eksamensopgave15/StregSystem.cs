@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Eksamensopgave15
 {
-    class LineSystem
+    class Stregsystem
     {
         public UserList userList;
         public ProductList productList;
         public TransactionLogging transactionLogging;
 
-        public LineSystem()
+        public Stregsystem()
         {
             userList = new UserList();
             productList = new ProductList();
@@ -31,7 +31,7 @@ namespace Eksamensopgave15
 
         public void ExecuteTransaction(Transaction transaction)
         {
-
+            transaction.Execute();
         }
 
         public Product GetProduct(int id)
@@ -44,9 +44,9 @@ namespace Eksamensopgave15
             return userList.GetUserByUserName(userName);
         }
 
-        public List<string> GetTransactionList(int numOfTransActions, string userName)
+        public List<string> GetTransactionList(int numOfTransactions, string userName)
         {
-
+            return transactionLogging.GetTransactionsFromLog(numOfTransactions, userName);
         }
 
         public List<Product> GetActiveProducts()

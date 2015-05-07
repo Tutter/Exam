@@ -23,12 +23,14 @@ namespace Eksamensopgave15
             int id;
             bool emailIsValid;
             bool userNameIsValid;
+            bool userNameIsUnique;
 
             id = GetNextUserId();
             emailIsValid = IsValidEmail(email);
             userNameIsValid = IsValidUsername(userName);
+            userNameIsUnique = IsUniqueUsername(userName);
 
-            if (emailIsValid == true && userNameIsValid == true)
+            if (emailIsValid == true && userNameIsValid == true && userNameIsUnique == true)
             {
                 users.Add(new User(id, firstName, lastName, userName, email));
                 return (int)AddUserReturns.success;
@@ -77,6 +79,17 @@ namespace Eksamensopgave15
             }
 
             return false;
+        }
+
+        private bool IsUniqueUsername(string userName)
+        {
+            foreach (User user in users)
+            {
+                if (user.userName == userName)
+                    return false;
+            }
+
+            return true;
         }
 
         public User GetUserByUserName(string userName)

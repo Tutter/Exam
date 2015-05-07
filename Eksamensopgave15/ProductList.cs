@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Eksamensopgave15
@@ -45,6 +46,17 @@ namespace Eksamensopgave15
                     activeProduct = true;
 
                 products.Add(new Product(id, name, price, activeProduct));            
+            }
+
+            RemoveHTMLTags();
+        }
+
+        //Found at http://www.dotnetperls.com/remove-html-tags
+        private void RemoveHTMLTags()
+        {
+            foreach (Product product in products)
+            {
+                Regex.Replace(product.name, "<.*?>", string.Empty);
             }
         }
     }
