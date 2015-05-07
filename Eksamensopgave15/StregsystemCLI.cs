@@ -65,7 +65,7 @@ namespace Eksamensopgave15
 
         public void Close()
         {
- 	        throw new NotImplementedException();
+            Console.WriteLine("Closing the program");
         }
 
         public void DisplayInsufficientCash()
