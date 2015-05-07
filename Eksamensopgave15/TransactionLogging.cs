@@ -57,7 +57,11 @@ namespace Eksamensopgave15
                 line = File.ReadLines(path).Skip(linesInFile - counter).ToString();
 
                 if (line.Contains(userName))
+                {
                     transactions.Add(line);
+                    transactionsFound++;
+                }
+                counter++;
             }
 
             return transactions;
