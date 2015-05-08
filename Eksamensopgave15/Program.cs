@@ -10,7 +10,8 @@ namespace Eksamensopgave15
     {
         static void Main(string[] args)
         {
-            StregsystemCLI stregsystemCLI = new StregsystemCLI();
+            Stregsystem stregsystem = new Stregsystem();
+            StregsystemCLI stregsystemCLI = new StregsystemCLI(stregsystem);
 
             stregsystemCLI.Start();
 

@@ -10,9 +10,9 @@ namespace Eksamensopgave15
     {
         public Stregsystem stregsystem;
 
-        public StregsystemCLI()
+        public StregsystemCLI(Stregsystem stregsystem)
         {
-            stregsystem = new Stregsystem();
+            this.stregsystem = stregsystem;
         }
 
         public void Start()
