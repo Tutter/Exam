@@ -8,11 +8,11 @@ namespace Eksamensopgave15
 {
     class Product
     {
-        private int id;
+        public int id { get; set; }
         public string name { get; set; }
         public int price { get; set; }
-        public bool active;
-        private bool canBeBoughtOnCredit;
+        public bool active { get; set; }
+        public bool canBeBoughtOnCredit;
 
         public Product(int id, string name, int price, bool active)
         {

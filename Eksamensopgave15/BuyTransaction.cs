@@ -11,14 +11,14 @@ namespace Eksamensopgave15
         public Product product { get; set; }
         public int amountOfProduct { get; set; }
 
-        public BuyTransaction(User user, Product product, int price) : base(user, price)
+        public BuyTransaction(int id, User user, Product product, int price) : base(id, user, price)
         {
             this.product = product;
             amountOfProduct = 1;
         }
 
-        public BuyTransaction(User user, Product product, int price, int amount)
-            : base(user, price)
+        public BuyTransaction(int id, User user, Product product, int price, int amount)
+            : base(id, user, price)
         {
             this.product = product;
             amountOfProduct = amount;
@@ -26,7 +26,7 @@ namespace Eksamensopgave15
 
         public override string ToString()
         {
-            return "Buying product from user: " + user + "'s account" + "\n" + base.ToString();
+            return base.ToString() + "Bought " + product.name + " from user: " + user.userName + "'s account" + "\n";
         }
 
         public override void Execute()

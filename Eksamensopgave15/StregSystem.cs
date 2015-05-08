@@ -19,25 +19,35 @@ namespace Eksamensopgave15
             transactionLogging = new TransactionLogging();
         }
 
-        public void BuyProduct(User user, Product product)
+        public BuyTransaction BuyProduct(User user, Product product, int price)
         {
-            Transaction transaction = new BuyTransaction(user, product, product.price);
+            BuyTransaction transaction = new BuyTransaction(transactionLogging.GetNextTransactionId(), user, product, product.price);
 
             ExecuteTransaction(transaction);
+
+            return transaction;
         }
 
-        public void BuyProduct(User user, Product product, int amount)
+        public BuyTransaction BuyProduct(User user, Product product, int price, int amount)
         {
-            Transaction transaction = new BuyTransaction(user, product, product.price, amount);
+            BuyTransaction transaction = new BuyTransaction(transactionLogging.GetNextTransactionId(), user, product, product.price, amount);
 
             ExecuteTransaction(transaction);
+
+            transactionLogging.WriteTransactionToFile(transaction);
+
+            return transaction;
         }
 
-        public void AddCreditsToAccount(User user, int amount)
+        public InsertCashTransaction AddCreditsToAccount(User user, int amount)
         {
-            Transaction transaction = new InsertCashTransaction(user, amount);
+            InsertCashTransaction transaction = new InsertCashTransaction(transactionLogging.GetNextTransactionId(), user, amount);
             
             ExecuteTransaction(transaction);
+
+            transactionLogging.WriteTransactionToFile(transaction);
+
+            return transaction;
         }
 
         private void ExecuteTransaction(Transaction transaction)
@@ -66,6 +76,26 @@ namespace Eksamensopgave15
             activeProducts = productList.products.Where(product => product.active).ToList<Product>();
 
             return activeProducts;
+        }
+
+        public void ActivateProduct(int id)
+        {
+            productList.ActivateProductByID(id);
+        }
+
+        public void DeactivateProduct(int id)
+        {
+            productList.DeactivateProductByID(id);
+        }
+
+        public void ActivateBuyOnCredit(int id)
+        {
+            productList.ActivateBuyOnCreditsByID(id);
+        }
+
+        public void DeactivateBuyOnCredit(int id)
+        {
+            productList.DeactivateBuyOnCreditsByID(id);
         }
     }
 }

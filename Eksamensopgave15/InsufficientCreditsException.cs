@@ -8,10 +8,13 @@ namespace Eksamensopgave15
 {
     class InsufficientCreditsException : Exception
     {
-        public InsufficientCreditsException(User user, Product product) 
-            : base("User: " + user.userName + " has insufficient credits for " + product.name)
-        {
+        public User user;
+        public Product product;
 
+        public InsufficientCreditsException(User user, Product product)            
+        {
+            this.user = user;
+            this.product = product;
         }
     }
 }

@@ -46,6 +46,7 @@
     <Compile Include="InsufficientCreditsException.cs" />
     <Compile Include="IStregsystemUI.cs" />
     <Compile Include="IUserDataHandling.cs" />
+    <Compile Include="ProductNotFoundException.cs" />
     <Compile Include="Stregsystem.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductList.cs" />

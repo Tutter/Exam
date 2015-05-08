@@ -8,15 +8,15 @@ namespace Eksamensopgave15
 {
     class InsertCashTransaction : Transaction
     {
-        public InsertCashTransaction(User user, int amount) 
-            : base(user, amount)
+        public InsertCashTransaction(int id, User user, int amount) 
+            : base(id, user, amount)
         {
 
         }
 
         public override string ToString()
         {
-            return "Inserting cash to user: " + user + "'s balance" + "\n" + base.ToString();
+            return base.ToString() + "Inserted cash to user: " + user + "'s balance" + "\n";
         }
 
         public override void Execute()

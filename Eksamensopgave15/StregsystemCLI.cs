@@ -38,9 +38,19 @@ namespace Eksamensopgave15
             Console.WriteLine("The product with ID: " + productId + " was not found");
         }
 
+        public void DisplayNotValidProductID()
+        {
+            Console.WriteLine("That is not a valid product ID");
+        }
+
+        public void DisplayNotValidAmountOfProduct()
+        {
+            Console.WriteLine("That is not a valid product amount");
+        }
+
         public void DisplayUserInfo(string userName)
         {
-            Console.WriteLine(stregsystem.userList.GetUserByUserName(userName));
+            Console.WriteLine(stregsystem.userList.GetUserByUserName(userName).ToString());
         }
 
         public void DisplayTooManyArgumentsError()
@@ -63,14 +73,19 @@ namespace Eksamensopgave15
             Console.WriteLine("User: " + transaction.user.userName + " bought " + amount + " of " + transaction.product.name);
         }
 
+        public void DisplayInsertedCashToUser(string userName, int amount)
+        {
+            Console.WriteLine("Inserted " + amount + " ører into user: " + userName + "'s account");
+        }
+
         public void Close()
         {
             Console.WriteLine("Closing the program");
         }
 
-        public void DisplayInsufficientCash()
+        public void DisplayInsufficientCash(string userName, string productName)
         {
-            Console.WriteLine("User");
+            Console.WriteLine("User: " + userName + "has insufficient credits for " + productName);
         }
 
         public void DisplayGeneralError(string errorString)

@@ -52,5 +52,52 @@ namespace Eksamensopgave15
         {
                 return Regex.Replace(line, "<.*?>", string.Empty);
         }
+
+        public Product GetProductByID(int id)
+        {
+            foreach (Product product in products)
+            {
+                if (product.id == id)
+                    return product;
+            }
+
+            throw new ProductNotFoundException(id);
+        }
+
+        public void ActivateProductByID(int id)
+        {
+            foreach (Product product in products)
+            {
+                if (product.id == id)
+                    product.active = true;
+            }
+        }
+
+        public void DeactivateProductByID(int id)
+        {
+            foreach (Product product in products)
+            {
+                if (product.id == id)
+                    product.active = false;
+            }
+        }
+
+        public void ActivateBuyOnCreditsByID(int id)
+        {
+            foreach (Product product in products)
+            {
+                if (product.id == id)
+                    product.canBeBoughtOnCredit = true;
+            }
+        }
+
+        public void DeactivateBuyOnCreditsByID(int id)
+        {
+            foreach (Product product in products)
+            {
+                if (product.id == id)
+                    product.canBeBoughtOnCredit = false;
+            }
+        }
     }
 }

@@ -37,10 +37,15 @@ namespace Eksamensopgave15
             string lastLine;
             string[] lineValues;
 
-            lastLine = File.ReadLines(path).Last();
-            lineValues = lastLine.Split(' ');
+            if (new FileInfo(@".\Transaction_Log.txt").Length != 0)
+            {
+                lastLine = File.ReadLines(path).Last();
+                lineValues = lastLine.Split(' ');
 
-            return Convert.ToInt32(lineValues[2]);
+                return Convert.ToInt32(lineValues[2]);
+            }
+
+            return 1;
         }
 
         public List<String> GetTransactionsFromLog(int numOfTransactions, string userName)

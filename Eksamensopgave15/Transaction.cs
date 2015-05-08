@@ -13,8 +13,9 @@ namespace Eksamensopgave15
         protected DateTime date;
         public int price { get; set; }
 
-        public Transaction(User user, int price)
+        public Transaction(int id, User user, int price)
         {
+            this.id = id;
             this.user = user;
             this.price = price;
 

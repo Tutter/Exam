@@ -9,6 +9,7 @@ namespace Eksamensopgave15
     interface IUserDataHandling
     {
         int AddUser(string firstName, string lastName, string userName, string email);
+        
         string ReadUser(string userName);
     }
 }

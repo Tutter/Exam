@@ -16,7 +16,7 @@ namespace Eksamensopgave15
         void DisplayUserBuysProduct(BuyTransaction transaction);
         void DisplayUserBuysProduct(BuyTransaction transaction, int amount);
         void Close();
-        void DisplayInsufficientCash();
+        void DisplayInsufficientCash(string userName, string productName);
         void DisplayGeneralError(string errorString);
     }
 }

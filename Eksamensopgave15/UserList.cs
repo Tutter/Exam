@@ -99,7 +99,7 @@ namespace Eksamensopgave15
                 if (user.userName == userName)
                     return user;
             }
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(userName);
         }
 
         public string ReadUser(string userName)
@@ -109,7 +109,7 @@ namespace Eksamensopgave15
                 if (user.userName == userName)
                     return "ID: " + user.id + "\nName: " + user.firstName + " " + user.lastName + "\nUsername: " + user.userName + "\nEmail: " + user.email;
             }
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(userName);
         }
     }
 }

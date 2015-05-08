@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Eksamensopgave15
 {
-    class UserNotFoundException : Exception
+    class ProductNotFoundException : Exception
     {
-        public string userName;
-        public UserNotFoundException(string userName)
-        {
+        public int id;
 
-            this.userName = userName;
+        public ProductNotFoundException(int id)
+        {
+            this.id = id;
         }
     }
 }

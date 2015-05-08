@@ -8,9 +8,9 @@ namespace Eksamensopgave15
 {
     class StregsystemCommandParser
     {   
-        private string[] currentCommand;
         public Stregsystem stregsystem;
         public StregsystemCLI stregsystemCLI;
+        private Dictionary<string, Delegate> adminCommands;
 
         public StregsystemCommandParser(Stregsystem stregsystem, StregsystemCLI stregsystemCLI)
         {
@@ -20,23 +20,176 @@ namespace Eksamensopgave15
 
         public void ParseCommand()
         {
+            string[] currentCommand;
+            int numOfArguments;
 
-            currentCommand = Console.ReadLine().Split(' ');
+            currentCommand = GetUserInput();
+            numOfArguments = currentCommand.Count();
 
-            if (currentCommand.Count() == 1)
+            switch (numOfArguments)
             {
-
+                case 1:
+                    if (currentCommand[0].Contains(':'))
+                    {
+                        HandleAdminCommand(currentCommand);
+                    }
+                    else
+                    {
+                        UserInfoCommand(currentCommand);
+                    }
+                    break;
+                case 2:
+                    BuyProductCommand(currentCommand);
+                    break;   
+                case 3:
+                    BuyMultipleProductCommand(currentCommand);
+                    break;
+                default:
+                    stregsystemCLI.DisplayTooManyArgumentsError();
+                    break;
             }
-            else if (currentCommand.Count() == 2)
+        }
+
+        private void HandleAdminCommand(string[] currentCommand)
+        {
+
+        }
+
+        private void FillAdminDictionary()
+        {
+            adminCommands.Add(":quit", new Action(stregsystemCLI.Close));
+            adminCommands.Add(":q", new Action(stregsystemCLI.Close));
+            adminCommands.Add(":activate", new Action<int>(stregsystem.ActivateProduct));
+            adminCommands.Add(":deactivate", new Action<int>(stregsystem.DeactivateProduct));
+            adminCommands.Add(":crediton", new Action<int>(stregsystem.ActivateBuyOnCredit));
+            adminCommands.Add(":creditoff", new Action<int>(stregsystem.DeactivateBuyOnCredit));
+            adminCommands.Add(":addcredits", new Action<string, int>(InsertCashCommand));
+        }
+
+        private void InsertCashCommand(string userName, int amount)
+        {
+            User user;
+            try
             {
-
+                user = stregsystem.GetUser(userName);
             }
-            else if (currentCommand.Count() == 3)
+            catch (UserNotFoundException e)
             {
-
+                stregsystemCLI.DisplayUserNotFound(e.userName);
+                return;
             }
-            else
-                stregsystemCLI.DisplayTooManyArgumentsError();
+
+            stregsystem.AddCreditsToAccount(user, amount);
+            stregsystemCLI.DisplayInsertedCashToUser(user.userName, amount);
+        }
+
+        private string[] GetUserInput()
+        {
+            return Console.ReadLine().Split(' ');
+        }
+
+        private void UserInfoCommand(string[] currentCommand)
+        {
+            try
+            {
+                stregsystemCLI.DisplayUserInfo(currentCommand[0]);
+            }
+            catch (UserNotFoundException e)
+            {
+                stregsystemCLI.DisplayUserNotFound(e.userName);
+            }
+        }
+
+        private void BuyProductCommand(string[] currentCommand)
+        {
+            User user;
+            int productId;
+            Product product;
+            BuyTransaction transaction;
+
+            Int32.TryParse(currentCommand[1], out productId);
+            if (productId == -1)
+            {
+                stregsystemCLI.DisplayNotValidProductID();
+                return;
+            }
+            
+            try
+            {
+                user = stregsystem.userList.GetUserByUserName(currentCommand[0]);
+                product = stregsystem.productList.GetProductByID(productId);
+                transaction = stregsystem.BuyProduct(user, product, product.price);
+            }
+
+            catch (UserNotFoundException e)
+            {
+                stregsystemCLI.DisplayUserNotFound(e.userName);
+                return;
+            }
+
+            catch (ProductNotFoundException e)
+            {
+                stregsystemCLI.DisplayProductNotFound(e.id);
+                return;
+            }
+
+            catch (InsufficientCreditsException e)
+            {
+                stregsystemCLI.DisplayInsufficientCash(e.user.userName, e.product.name);
+                return;
+            }
+
+            stregsystemCLI.DisplayUserBuysProduct(transaction);
+        }
+
+        private void BuyMultipleProductCommand(string[] currentCommand)
+        {
+            User user;
+            int productId = 0;
+            int amount = 0;
+            Product product;
+            BuyTransaction transaction;
+
+            Int32.TryParse(currentCommand[1], out productId);
+            if (amount < 1)
+            {
+                stregsystemCLI.DisplayNotValidAmountOfProduct();
+                return;
+            }
+
+            Int32.TryParse(currentCommand[2], out productId);
+            if (productId < 1)
+            {
+                stregsystemCLI.DisplayNotValidProductID();
+                return;
+            }
+
+            try
+            {
+                user = stregsystem.userList.GetUserByUserName(currentCommand[0]);
+                product = stregsystem.productList.GetProductByID(productId);
+                transaction = stregsystem.BuyProduct(user, product, product.price, amount);
+            }
+
+            catch (UserNotFoundException e)
+            {
+                stregsystemCLI.DisplayUserNotFound(e.userName);
+                return;
+            }
+
+            catch (ProductNotFoundException e)
+            {
+                stregsystemCLI.DisplayProductNotFound(e.id);
+                return;
+            }
+
+            catch (InsufficientCreditsException e)
+            {
+                stregsystemCLI.DisplayInsufficientCash(e.user.userName, e.product.name);
+                return;
+            }
+
+            stregsystemCLI.DisplayUserBuysProduct(transaction, amount);
         }
     }
 }
