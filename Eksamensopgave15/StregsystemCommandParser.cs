@@ -20,6 +20,7 @@ namespace Eksamensopgave15
 
         public void ParseCommand()
         {
+
             currentCommand = Console.ReadLine().Split(' ');
 
             if (currentCommand.Count() == 1)
