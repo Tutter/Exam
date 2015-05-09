@@ -16,6 +16,8 @@ namespace Eksamensopgave15
         {
             this.stregsystem = stregsystem;
             this.stregsystemCLI = stregsystemCLI;
+            adminCommands = new Dictionary<string,Delegate>();
+            FillAdminDictionary();
         }
 
         public void ParseCommand()
@@ -25,18 +27,17 @@ namespace Eksamensopgave15
 
             currentCommand = GetUserInput();
             numOfArguments = currentCommand.Count();
+            
+            if (currentCommand[0].Contains(':'))
+            {
+                HandleAdminCommand(currentCommand, numOfArguments);
+                return;
+            }
 
             switch (numOfArguments)
             {
                 case 1:
-                    if (currentCommand[0].Contains(':'))
-                    {
-                        HandleAdminCommand(currentCommand);
-                    }
-                    else
-                    {
-                        UserInfoCommand(currentCommand);
-                    }
+                    UserInfoCommand(currentCommand);
                     break;
                 case 2:
                     BuyProductCommand(currentCommand);
@@ -50,11 +51,6 @@ namespace Eksamensopgave15
             }
         }
 
-        private void HandleAdminCommand(string[] currentCommand)
-        {
-
-        }
-
         private void FillAdminDictionary()
         {
             adminCommands.Add(":quit", new Action(stregsystemCLI.Close));
@@ -63,12 +59,60 @@ namespace Eksamensopgave15
             adminCommands.Add(":deactivate", new Action<int>(stregsystem.DeactivateProduct));
             adminCommands.Add(":crediton", new Action<int>(stregsystem.ActivateBuyOnCredit));
             adminCommands.Add(":creditoff", new Action<int>(stregsystem.DeactivateBuyOnCredit));
-            adminCommands.Add(":addcredits", new Action<string, int>(InsertCashCommand));
+            adminCommands.Add(":addcredits", new Action<string, int>(InsertCashAdminCommand));
         }
 
-        private void InsertCashCommand(string userName, int amount)
+        private void HandleAdminCommand(string[] currentCommand, int numOfArguments)
+        {
+            int productId = 0;
+            int amountOfCredits = 0;
+
+            if(!adminCommands.ContainsKey(currentCommand[0]))
+            {
+                stregsystemCLI.DisplayAdminCommandNotFoundMessage();
+                return;
+            }
+
+            switch (numOfArguments)
+            {
+                case 1:
+                    adminCommands[currentCommand[0]].DynamicInvoke();
+                    break;
+                case 2:
+                    Int32.TryParse(currentCommand[1], out productId);
+                    
+                    if (productId < 1)
+                    {
+                        stregsystemCLI.DisplayNotValidProductID();
+                    }
+                    else
+                    {
+                        adminCommands[currentCommand[0]].DynamicInvoke(productId);
+                    } 
+                    break;   
+                case 3:
+                    Int32.TryParse(currentCommand[2], out amountOfCredits);
+                    
+                    if (amountOfCredits < 1)
+                    {
+                        stregsystemCLI.DisplayNotValidCreditAmount();
+                    }
+                    else
+                    {
+                        adminCommands[currentCommand[0]].DynamicInvoke(currentCommand[1], amountOfCredits);
+                    } 
+                    break;
+                default:
+                    stregsystemCLI.DisplayAdminCommandNotFoundMessage();
+                    break;
+            }         
+        }
+
+        private void InsertCashAdminCommand(string userName, int amount)
         {
             User user;
+            int amountOfCredits = 0;
+            
             try
             {
                 user = stregsystem.GetUser(userName);
@@ -79,8 +123,8 @@ namespace Eksamensopgave15
                 return;
             }
 
-            stregsystem.AddCreditsToAccount(user, amount);
-            stregsystemCLI.DisplayInsertedCashToUser(user.userName, amount);
+            stregsystem.AddCreditsToAccount(user, amountOfCredits);
+            stregsystemCLI.DisplayInsertedCashToUser(user.userName, amountOfCredits);
         }
 
         private string[] GetUserInput()
@@ -103,12 +147,12 @@ namespace Eksamensopgave15
         private void BuyProductCommand(string[] currentCommand)
         {
             User user;
-            int productId;
+            int productId = 0;
             Product product;
             BuyTransaction transaction;
 
             Int32.TryParse(currentCommand[1], out productId);
-            if (productId == -1)
+            if (productId < 1)
             {
                 stregsystemCLI.DisplayNotValidProductID();
                 return;

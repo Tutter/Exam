@@ -11,11 +11,9 @@ namespace Eksamensopgave15
         static void Main(string[] args)
         {
             Stregsystem stregsystem = new Stregsystem();
-            StregsystemCLI stregsystemCLI = new StregsystemCLI(stregsystem);
-
-            stregsystemCLI.Start();
-
-            Console.ReadKey();
+            StregsystemCLI cli = new StregsystemCLI(stregsystem);
+            StregsystemCommandParser commandParser = new StregsystemCommandParser(stregsystem, cli);
+            cli.Start(commandParser);
         }
     }
 }

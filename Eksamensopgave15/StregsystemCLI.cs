@@ -9,15 +9,28 @@ namespace Eksamensopgave15
     class StregsystemCLI : IStregsystemUI
     {
         public Stregsystem stregsystem;
+        private bool running;
 
         public StregsystemCLI(Stregsystem stregsystem)
         {
             this.stregsystem = stregsystem;
+            running = true;
         }
 
-        public void Start()
+        public void Start(StregsystemCommandParser commandParser)
         {
-            DisplayProducts();
+            MainLoop(commandParser);
+        }
+
+        private void MainLoop(StregsystemCommandParser commandParser)
+        {
+            while (running)
+            {
+                Console.Clear();
+                DisplayProducts();
+                commandParser.ParseCommand();
+                Console.ReadKey();
+            }
         }
 
         private void DisplayProducts()
@@ -26,6 +39,7 @@ namespace Eksamensopgave15
             {
                 Console.WriteLine(product.ToString());
             }
+            Console.WriteLine();
         }
 
         public void DisplayUserNotFound(string userName)
@@ -78,9 +92,15 @@ namespace Eksamensopgave15
             Console.WriteLine("Inserted " + amount + " ører into user: " + userName + "'s account");
         }
 
+        public void DisplayNotValidCreditAmount()
+        {
+            Console.WriteLine("Invalid amount of credits to transfer");
+        }
+
         public void Close()
         {
             Console.WriteLine("Closing the program");
+            running = false;
         }
 
         public void DisplayInsufficientCash(string userName, string productName)
