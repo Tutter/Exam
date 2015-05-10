@@ -25,6 +25,8 @@ namespace Eksamensopgave15
 
             ExecuteTransaction(transaction);
 
+            transactionLogging.WriteTransactionToFile(transaction);
+
             return transaction;
         }
 

@@ -24,7 +24,7 @@ namespace Eksamensopgave15
 
         public override string ToString()
         {
-            return "Transaction ID: " + id + "\nAmount: " + price + "\nDate: " + date;
+            return "Transaction ID: " + id + " Amount: " + price + " Date: " + date;
         }
 
         public abstract void Execute();

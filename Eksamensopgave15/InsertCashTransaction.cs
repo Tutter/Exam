@@ -16,7 +16,7 @@ namespace Eksamensopgave15
 
         public override string ToString()
         {
-            return base.ToString() + "Inserted cash to user: " + user + "'s balance" + "\n";
+            return base.ToString() + " Inserted cash to user: " + user.userName + "'s balance";
         }
 
         public override void Execute()

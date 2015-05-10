@@ -22,6 +22,7 @@ namespace Eksamensopgave15
             this.lastName = lastName;
             this.userName = userName;
             this.email = email;
+            balance = 0;
         }
 
         public int CompareTo(object obj)

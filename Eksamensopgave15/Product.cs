@@ -25,7 +25,7 @@ namespace Eksamensopgave15
 
         public override string ToString()
         {
-            return id + "\t" + name + "\t" + price;
+            return id + "\t" + name + "\t" + (float)price / 100;
         }
     }
 }

@@ -10,12 +10,13 @@ namespace Eksamensopgave15
     class UserList : IUserDataHandling
     {
         public List<User> users;
-        private int nextId;
         enum AddUserReturns { success, emailInvalid, userNameInvalid, allInvalid };
+        int debug;
 
         public UserList()
         {
             users = new List<User>();
+            DebugUsers();
         }
 
         public int AddUser(string firstName, string lastName, string userName, string email)
@@ -110,6 +111,14 @@ namespace Eksamensopgave15
                     return "ID: " + user.id + "\nName: " + user.firstName + " " + user.lastName + "\nUsername: " + user.userName + "\nEmail: " + user.email;
             }
             throw new UserNotFoundException(userName);
+        }
+
+        private void DebugUsers()
+        {
+            debug = AddUser("Tobias", "Bøgedal", "Tutter", "tuttanium@gmail.com");
+            debug = AddUser("August", "Kørvell", "Aggi", "Aggisoft@gmail.com");
+            debug = AddUser("Daniel", "Bøgedal", "Muggi", "tuttanium@gmail.com");
+            debug = AddUser("Tobias", "Bøgedal", "Tut@@ter", "tuttaasdnium@gmail.com");
         }
     }
 }

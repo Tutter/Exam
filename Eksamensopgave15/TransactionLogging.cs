@@ -13,16 +13,12 @@ namespace Eksamensopgave15
 
         public TransactionLogging()
         {
-            this.path = @".\Transaction_Log.txt";
+            path = @".\Transaction_Log.txt";
             if (!File.Exists(path))
             {
-                CreateLog();
+                FileStream fs = File.Create(path);
+                fs.Close();
             }
-        }
-
-        private void CreateLog()
-        {
-            File.Create(path);
         }
 
         public void WriteTransactionToFile(Transaction transaction)
@@ -30,19 +26,28 @@ namespace Eksamensopgave15
             StreamWriter writer = File.AppendText(path);
 
             writer.WriteLine(transaction.ToString());
+
+            writer.Close();
         }
 
         public int GetNextTransactionId()
         {
+            int linesToSkip;
             string lastLine;
             string[] lineValues;
 
             if (new FileInfo(@".\Transaction_Log.txt").Length != 0)
             {
                 lastLine = File.ReadLines(path).Last();
+
+                if (lastLine == "")
+                {
+                    linesToSkip = File.ReadLines(path).Count() - 2;
+                    lastLine = File.ReadLines(path).Skip(linesToSkip).First();
+                }
                 lineValues = lastLine.Split(' ');
 
-                return Convert.ToInt32(lineValues[2]);
+                return Convert.ToInt32(lineValues[2]) + 1;
             }
 
             return 1;
@@ -50,7 +55,7 @@ namespace Eksamensopgave15
 
         public List<String> GetTransactionsFromLog(int numOfTransactions, string userName)
         {
-            int linesInFile = FindLengthOfFile();
+            int linesInFile = File.ReadLines(path).Count();
             int transactionsFound = 0;
             string line;
             int counter = 1;
@@ -70,17 +75,6 @@ namespace Eksamensopgave15
             }
 
             return transactions;
-        }
-
-        private int FindLengthOfFile()
-        {
-            int count = 0;
-            StreamReader reader = new StreamReader(File.OpenRead(path));
-
-            while (!reader.EndOfStream)
-                count++;
-
-            return count;
         }
     }
 }

@@ -28,6 +28,7 @@ namespace Eksamensopgave15
             {
                 Console.Clear();
                 DisplayProducts();
+                Console.Write("Enter a command: ");
                 commandParser.ParseCommand();
                 Console.ReadKey();
             }
@@ -89,7 +90,7 @@ namespace Eksamensopgave15
 
         public void DisplayInsertedCashToUser(string userName, int amount)
         {
-            Console.WriteLine("Inserted " + amount + " ører into user: " + userName + "'s account");
+            Console.WriteLine("Inserted " + amount + " kr into user: " + userName + "'s account");
         }
 
         public void DisplayNotValidCreditAmount()
@@ -105,7 +106,7 @@ namespace Eksamensopgave15
 
         public void DisplayInsufficientCash(string userName, string productName)
         {
-            Console.WriteLine("User: " + userName + "has insufficient credits for " + productName);
+            Console.WriteLine("User: " + userName + " has insufficient credits for " + productName);
         }
 
         public void DisplayGeneralError(string errorString)

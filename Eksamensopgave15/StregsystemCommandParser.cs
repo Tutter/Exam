@@ -73,45 +73,51 @@ namespace Eksamensopgave15
                 return;
             }
 
-            switch (numOfArguments)
+            try
             {
-                case 1:
-                    adminCommands[currentCommand[0]].DynamicInvoke();
-                    break;
-                case 2:
-                    Int32.TryParse(currentCommand[1], out productId);
-                    
-                    if (productId < 1)
-                    {
-                        stregsystemCLI.DisplayNotValidProductID();
-                    }
-                    else
-                    {
-                        adminCommands[currentCommand[0]].DynamicInvoke(productId);
-                    } 
-                    break;   
-                case 3:
-                    Int32.TryParse(currentCommand[2], out amountOfCredits);
-                    
-                    if (amountOfCredits < 1)
-                    {
-                        stregsystemCLI.DisplayNotValidCreditAmount();
-                    }
-                    else
-                    {
-                        adminCommands[currentCommand[0]].DynamicInvoke(currentCommand[1], amountOfCredits);
-                    } 
-                    break;
-                default:
-                    stregsystemCLI.DisplayAdminCommandNotFoundMessage();
-                    break;
-            }         
+                switch (numOfArguments)
+                {
+                    case 1:
+                        adminCommands[currentCommand[0]].DynamicInvoke();
+                        break;
+                    case 2:
+                        Int32.TryParse(currentCommand[1], out productId);
+
+                        if (productId < 1)
+                        {
+                            stregsystemCLI.DisplayNotValidProductID();
+                        }
+                        else
+                        {
+                            adminCommands[currentCommand[0]].DynamicInvoke(productId);
+                        }
+                        break;
+                    case 3:
+                        Int32.TryParse(currentCommand[2], out amountOfCredits);
+
+                        if (amountOfCredits < 1)
+                        {
+                            stregsystemCLI.DisplayNotValidCreditAmount();
+                        }
+                        else
+                        {
+                            adminCommands[currentCommand[0]].DynamicInvoke(currentCommand[1], amountOfCredits);
+                        }
+                        break;
+                    default:
+                        stregsystemCLI.DisplayAdminCommandNotFoundMessage();
+                        break;
+                }         
+            }
+            catch
+            {
+                stregsystemCLI.DisplayAdminCommandNotFoundMessage();
+            }       
         }
 
         private void InsertCashAdminCommand(string userName, int amount)
         {
             User user;
-            int amountOfCredits = 0;
             
             try
             {
@@ -123,8 +129,8 @@ namespace Eksamensopgave15
                 return;
             }
 
-            stregsystem.AddCreditsToAccount(user, amountOfCredits);
-            stregsystemCLI.DisplayInsertedCashToUser(user.userName, amountOfCredits);
+            stregsystem.AddCreditsToAccount(user, amount * 100);
+            stregsystemCLI.DisplayInsertedCashToUser(user.userName, amount);
         }
 
         private string[] GetUserInput()
@@ -194,7 +200,7 @@ namespace Eksamensopgave15
             Product product;
             BuyTransaction transaction;
 
-            Int32.TryParse(currentCommand[1], out productId);
+            Int32.TryParse(currentCommand[1], out amount);
             if (amount < 1)
             {
                 stregsystemCLI.DisplayNotValidAmountOfProduct();
