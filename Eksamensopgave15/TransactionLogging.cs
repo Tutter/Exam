@@ -62,11 +62,11 @@ namespace Eksamensopgave15
             List<String> transactions = new List<string>();
 
 
-            while (transactionsFound <= numOfTransactions && counter <= linesInFile)
+            while (transactionsFound < numOfTransactions && counter <= linesInFile)
             {
-                line = File.ReadLines(path).Skip(linesInFile - counter).ToString();
+                line = File.ReadLines(path).Skip(linesInFile - counter).First();
 
-                if (line.Contains(userName))
+                if (line.Contains(" " + userName + " "))
                 {
                     transactions.Add(line);
                     transactionsFound++;

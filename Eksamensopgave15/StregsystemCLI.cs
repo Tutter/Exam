@@ -65,7 +65,16 @@ namespace Eksamensopgave15
 
         public void DisplayUserInfo(string userName)
         {
-            Console.WriteLine(stregsystem.userList.GetUserByUserName(userName).ToString());
+            User user = stregsystem.userList.GetUserByUserName(userName);
+            Console.WriteLine(user.ToString() + "\nUser's balance: " + user.balance);
+            DisplayBalanceUnderFifty(user);
+            DisplayUserLastTenTransactions(user);
+        }
+
+        private void DisplayBalanceUnderFifty(User user)
+        {
+            if (user.balance < 5000)
+                Console.WriteLine(user.userName + "'s balance is under 50kr");
         }
 
         public void DisplayTooManyArgumentsError()
@@ -112,6 +121,16 @@ namespace Eksamensopgave15
         public void DisplayGeneralError(string errorString)
         {
             Console.WriteLine("Error: " + errorString);
+        }
+
+        private void DisplayUserLastTenTransactions(User user)
+        {
+            List<string> transactions = stregsystem.transactionLogging.GetTransactionsFromLog(10, user.userName);
+
+            foreach (string str in transactions)
+            {
+                Console.WriteLine(str);
+            }
         }
     }
 }
