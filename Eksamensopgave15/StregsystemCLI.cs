@@ -66,7 +66,7 @@ namespace Eksamensopgave15
         public void DisplayUserInfo(string userName)
         {
             User user = stregsystem.userList.GetUserByUserName(userName);
-            Console.WriteLine(user.ToString() + "\nUser's balance: " + user.balance);
+            Console.WriteLine(user.ToString() + "\nUser's balance: " + ((float)user.balance/100) + "kr");
             DisplayBalanceUnderFifty(user);
             DisplayUserLastTenTransactions(user);
         }
@@ -125,11 +125,12 @@ namespace Eksamensopgave15
 
         private void DisplayUserLastTenTransactions(User user)
         {
-            List<string> transactions = stregsystem.transactionLogging.GetTransactionsFromLog(10, user.userName);
+            List<string[]> transactions = stregsystem.GetTransactionList(10, user.userName);
 
-            foreach (string str in transactions)
+            foreach (string[] str in transactions)
             {
-                Console.WriteLine(str);
+                Console.WriteLine(str[0]);
+                Console.WriteLine(str[1]);
             }
         }
     }

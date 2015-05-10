@@ -67,7 +67,7 @@ namespace Eksamensopgave15
             return userList.GetUserByUserName(userName);
         }
 
-        public List<string> GetTransactionList(int numOfTransactions, string userName)
+        public List<string[]> GetTransactionList(int numOfTransactions, string userName)
         {
             return transactionLogging.GetTransactionsFromLog(numOfTransactions, userName);
         }

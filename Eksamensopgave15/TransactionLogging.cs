@@ -53,13 +53,14 @@ namespace Eksamensopgave15
             return 1;
         }
 
-        public List<String> GetTransactionsFromLog(int numOfTransactions, string userName)
+        public List<String[]> GetTransactionsFromLog(int numOfTransactions, string userName)
         {
             int linesInFile = File.ReadLines(path).Count();
             int transactionsFound = 0;
             string line;
+            string[] splitLine;
             int counter = 1;
-            List<String> transactions = new List<string>();
+            List<String[]> transactions = new List<string[]>();
 
 
             while (transactionsFound < numOfTransactions && counter <= linesInFile)
@@ -68,7 +69,8 @@ namespace Eksamensopgave15
 
                 if (line.Contains(" " + userName + " "))
                 {
-                    transactions.Add(line);
+                    splitLine = line.Split(';');
+                    transactions.Add(splitLine);
                     transactionsFound++;
                 }
                 counter++;

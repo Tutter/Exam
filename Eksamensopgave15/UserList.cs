@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,6 +13,7 @@ namespace Eksamensopgave15
         public List<User> users;
         enum AddUserReturns { success, emailInvalid, userNameInvalid, allInvalid };
         int debug;
+        bool invalid;
 
         public UserList()
         {
@@ -56,18 +58,41 @@ namespace Eksamensopgave15
             return users[users.Count() - 1].id + 1;
         }
 
-        //Found at http://stackoverflow.com/questions/1365407/c-sharp-code-to-validate-email-address
-        private bool IsValidEmail(string email)
+        //Found at https://msdn.microsoft.com/en-us/library/vstudio/01escwtf%28v=vs.100%29.aspx
+        public bool IsValidEmail(string email)
         {
+            invalid = false;
+            if (String.IsNullOrEmpty(email))
+                return false;
+
+            // Use IdnMapping class to convert Unicode domain names.
+            email = Regex.Replace(email, @"(@)(.+)$", this.DomainMapper);
+            if (invalid)
+                return false;
+
+            // Return true if strIn is in valid e-mail format.
+            return Regex.IsMatch(email,
+                   @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-\w])*)(?<=[0-9a-z])@))" +
+                   @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$",
+                   RegexOptions.IgnoreCase);
+        }
+
+        //Part of https://msdn.microsoft.com/en-us/library/vstudio/01escwtf%28v=vs.100%29.aspx
+        private string DomainMapper(Match match)
+        {
+            // IdnMapping class with default property values.
+            IdnMapping idn = new IdnMapping();
+
+            string domainName = match.Groups[2].Value;
             try
             {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
+                domainName = idn.GetAscii(domainName);
             }
-            catch
+            catch (ArgumentException)
             {
-                return false;
+                invalid = true;
             }
+            return match.Groups[1].Value + domainName;
         }
 
         //Found at http://stackoverflow.com/questions/1046740/how-can-i-validate-a-string-to-only-allow-alphanumeric-characters-in-it
@@ -116,7 +141,7 @@ namespace Eksamensopgave15
         private void DebugUsers()
         {
             debug = AddUser("Tobias", "Bøgedal", "Tutter", "tuttanium@gmail.com");
-            debug = AddUser("August", "Kørvell", "Aggi", "Aggisoft@gmail.com");
+            debug = AddUser("August", "Kørvell", "Aggi", "Ag_gi.so-ft@gmail.com");
             debug = AddUser("Daniel", "Bøgedal", "Muggi", "tuttanium@gmail.com");
             debug = AddUser("Tobias", "Bøgedal", "Tut@@ter", "tuttaasdnium@gmail.com");
         }
