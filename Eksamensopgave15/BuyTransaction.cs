@@ -10,11 +10,13 @@ namespace Eksamensopgave15
     {
         public Product product { get; set; }
 
+        //Constructor for buying 1 product
         public BuyTransaction(int id, User user, Product product, int price) : base(id, user, price)
         {
             this.product = product;
         }
 
+        //Constructor for buying multiple products
         public BuyTransaction(int id, User user, Product product, int price, int amount)
             : base(id, user, price * amount)
         {
@@ -28,7 +30,9 @@ namespace Eksamensopgave15
 
         public override void Execute()
         {
-            if(user.balance >= price)
+            if (product.canBeBoughtOnCredit == true)
+                user.balance -= price;
+            else if(user.balance >= price)
                 user.balance -= price;
             else
                 throw new InsufficientCreditsException(user, product);

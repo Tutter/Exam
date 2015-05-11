@@ -166,7 +166,7 @@ namespace Eksamensopgave15
             
             try
             {
-                user = stregsystem.userList.GetUserByUserName(currentCommand[0]);
+                user = stregsystem.userList.GetUserByUsername(currentCommand[0]);
                 product = stregsystem.productList.GetProductByID(productId);
                 transaction = stregsystem.BuyProduct(user, product, product.price);
             }
@@ -216,7 +216,7 @@ namespace Eksamensopgave15
 
             try
             {
-                user = stregsystem.userList.GetUserByUserName(currentCommand[0]);
+                user = stregsystem.userList.GetUserByUsername(currentCommand[0]);
                 product = stregsystem.productList.GetProductByID(productId);
                 transaction = stregsystem.BuyProduct(user, product, product.price, amount);
             }

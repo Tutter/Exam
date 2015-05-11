@@ -18,6 +18,7 @@ namespace Eksamensopgave15
             ReadProducts();
         }
 
+        //Reads the products from a products file
         private void ReadProducts()
         {
             int id;
@@ -29,9 +30,12 @@ namespace Eksamensopgave15
 
             reader.ReadLine();
 
+            //While the streamreader is not at the end of the file
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
+
+                //Splits the sting every time a ';' is encountered and puts it into an array of strings
                 string[] lineValues = RemoveHTMLTags(line).Split(';');
 
                 id = (Convert.ToInt32(lineValues[0]));
@@ -53,6 +57,7 @@ namespace Eksamensopgave15
                 return Regex.Replace(line, "<.*?>", string.Empty);
         }
 
+        //Gets a product by id
         public Product GetProductByID(int id)
         {
             foreach (Product product in products)
@@ -64,6 +69,7 @@ namespace Eksamensopgave15
             throw new ProductNotFoundException(id);
         }
 
+        //Activates a product by id
         public void ActivateProductByID(int id)
         {
             foreach (Product product in products)
@@ -73,6 +79,7 @@ namespace Eksamensopgave15
             }
         }
 
+        //Deactivates a product by id
         public void DeactivateProductByID(int id)
         {
             foreach (Product product in products)
@@ -82,6 +89,7 @@ namespace Eksamensopgave15
             }
         }
 
+        //Activates that a product by id can be bought on credit
         public void ActivateBuyOnCreditsByID(int id)
         {
             foreach (Product product in products)
@@ -91,6 +99,7 @@ namespace Eksamensopgave15
             }
         }
 
+        //Deactivates that a product by id can be bought on credits
         public void DeactivateBuyOnCreditsByID(int id)
         {
             foreach (Product product in products)

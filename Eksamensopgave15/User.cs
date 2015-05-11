@@ -25,6 +25,7 @@ namespace Eksamensopgave15
             balance = 0;
         }
 
+        //Compares two users to see if they are the same object
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;
@@ -44,6 +45,7 @@ namespace Eksamensopgave15
             return "User's name: " + firstName + " " + lastName + "\nUser's email: " + email; 
         }
 
+        //Equals to users by their id
         public override bool Equals(object obj)
         {
             User other = obj as User;
@@ -55,6 +57,7 @@ namespace Eksamensopgave15
             return id.Equals(other.id);
         }
 
+        //Gets the hashcode by user id
         public override int GetHashCode()
         {
             return id.GetHashCode();

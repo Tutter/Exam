@@ -17,11 +17,13 @@ namespace Eksamensopgave15
             running = true;
         }
 
+        //Starts the command interface
         public void Start(StregsystemCommandParser commandParser)
         {
             MainLoop(commandParser);
         }
 
+        //The main loop of the program that takes commands and prints out to the user
         private void MainLoop(StregsystemCommandParser commandParser)
         {
             while (running)
@@ -34,6 +36,7 @@ namespace Eksamensopgave15
             }
         }
 
+        //Displays the active products
         private void DisplayProducts()
         {
             foreach (Product product in stregsystem.GetActiveProducts())
@@ -63,14 +66,16 @@ namespace Eksamensopgave15
             Console.WriteLine("That is not a valid product amount");
         }
 
+        //Displays information about a user by username
         public void DisplayUserInfo(string userName)
         {
-            User user = stregsystem.userList.GetUserByUserName(userName);
+            User user = stregsystem.userList.GetUserByUsername(userName);
             Console.WriteLine(user.ToString() + "\nUser's balance: " + ((float)user.balance/100) + "kr");
             DisplayBalanceUnderFifty(user);
             DisplayUserLastTenTransactions(user);
         }
 
+        //Displays a message if the user has a balance under 50kr
         private void DisplayBalanceUnderFifty(User user)
         {
             if (user.balance < 5000)
@@ -87,11 +92,13 @@ namespace Eksamensopgave15
             Console.WriteLine("That is not a valid admin command");
         }
 
+        //Overloaded method that displays a message when a user buys a single product
         public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
             Console.WriteLine("User: " + transaction.user.userName + " bought " + transaction.product.name);
         }
 
+        //Overlaoded method that displays a message when a user buys multiple products
         public void DisplayUserBuysProduct(BuyTransaction transaction, int amount)
         {
             Console.WriteLine("User: " + transaction.user.userName + " bought " + amount + " of " + transaction.product.name);
@@ -107,6 +114,7 @@ namespace Eksamensopgave15
             Console.WriteLine("Invalid amount of credits to transfer");
         }
 
+        //Displays a closing message and set the main loops sentinel value to false
         public void Close()
         {
             Console.WriteLine("Closing the program");
@@ -123,6 +131,7 @@ namespace Eksamensopgave15
             Console.WriteLine("Error: " + errorString);
         }
 
+        //Displays a given users latest ten transactions
         private void DisplayUserLastTenTransactions(User user)
         {
             List<string[]> transactions = stregsystem.GetTransactionList(10, user.userName);

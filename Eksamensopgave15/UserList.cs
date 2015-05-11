@@ -11,7 +11,7 @@ namespace Eksamensopgave15
     class UserList : IUserDataHandling
     {
         public List<User> users;
-        enum AddUserReturns { success, emailInvalid, userNameInvalid, allInvalid };
+        enum AddUserReturns { success, emailInvalid, usernameInvalid, allInvalid };
         int debug;
         bool invalid;
 
@@ -21,33 +21,38 @@ namespace Eksamensopgave15
             DebugUsers();
         }
 
-        public int AddUser(string firstName, string lastName, string userName, string email)
+        //Adds a user to the userlist if certain criteria are met
+        public int AddUser(string firstName, string lastName, string username, string email)
         {
             int id;
             bool emailIsValid;
-            bool userNameIsValid;
-            bool userNameIsUnique;
+            bool usernameIsValid;
+            bool userameIsUnique;
 
-            id = GetNextUserId();
             emailIsValid = IsValidEmail(email);
-            userNameIsValid = IsValidUsername(userName);
-            userNameIsUnique = IsUniqueUsername(userName);
+            usernameIsValid = IsValidUsername(username);
+            userameIsUnique = IsUniqueUsername(username);
 
-            if (emailIsValid == true && userNameIsValid == true && userNameIsUnique == true)
+            //If the email is valisd and the username is valid and the username is unique then add the user to the userlist and return success(0)
+            if (emailIsValid == true && usernameIsValid == true && userameIsUnique == true)
             {
-                users.Add(new User(id, firstName, lastName, userName, email));
+                id = GetNextUserId();
+                users.Add(new User(id, firstName, lastName, username, email));
                 return (int)AddUserReturns.success;
             }
 
-            if (emailIsValid == false && userNameIsValid == false)
+            //If the email is not valid and the username is not valid then return allInvalid(3)
+            if (emailIsValid == false && (usernameIsValid == false || userameIsUnique == false))
                 return (int)AddUserReturns.allInvalid;
-
-            if (emailIsValid == false)
+            //Else if the email is not valid then return emailInvalid(1)
+            else if (emailIsValid == false)
                 return (int)AddUserReturns.emailInvalid;
+            //else return userNameInvalid(2)
             else
-                return (int)AddUserReturns.userNameInvalid;
+                return (int)AddUserReturns.usernameInvalid;
         }
 
+        //Gets the next user id by checking the last userlist members id
         private int GetNextUserId()
         {
             if (users.Count() == 0)
@@ -96,10 +101,10 @@ namespace Eksamensopgave15
         }
 
         //Found at http://stackoverflow.com/questions/1046740/how-can-i-validate-a-string-to-only-allow-alphanumeric-characters-in-it
-        private bool IsValidUsername(string userName)
+        private bool IsValidUsername(string userame)
         {
             Regex r = new Regex("^[a-zA-Z0-9]*$");
-            if (r.IsMatch(userName))
+            if (r.IsMatch(userame))
             {
                 return true;
             }
@@ -107,6 +112,7 @@ namespace Eksamensopgave15
             return false;
         }
 
+        //Checks if the given username is already in the userlist
         private bool IsUniqueUsername(string userName)
         {
             foreach (User user in users)
@@ -118,16 +124,18 @@ namespace Eksamensopgave15
             return true;
         }
 
-        public User GetUserByUserName(string userName)
+        //Gets a user by username
+        public User GetUserByUsername(string username)
         {
             foreach (User user in users)
             {
-                if (user.userName == userName)
+                if (user.userName == username)
                     return user;
             }
-            throw new UserNotFoundException(userName);
+            throw new UserNotFoundException(username);
         }
 
+        //Reads a user by username and returns a string with information
         public string ReadUser(string userName)
         {
             foreach (User user in users)
@@ -138,12 +146,14 @@ namespace Eksamensopgave15
             throw new UserNotFoundException(userName);
         }
 
+        //Fills the userlist with some users
         private void DebugUsers()
         {
-            debug = AddUser("Tobias", "Bøgedal", "Tutter", "tuttanium@gmail.com");
-            debug = AddUser("August", "Kørvell", "Aggi", "Ag_gi.so-ft@gmail.com");
-            debug = AddUser("Daniel", "Bøgedal", "Muggi", "tuttanium@gmail.com");
-            debug = AddUser("Tobias", "Bøgedal", "Tut@@ter", "tuttaasdnium@gmail.com");
+            debug = AddUser("John", "Schmidt", "Smitty", "Schmidt@gmail.com");
+            debug = AddUser("John", "Schmidt", "Smitty", "Schmidt2@gmail.com");
+            debug = AddUser("Rick", "Rollin", "Ricky", "Never.Gonna_Give-You@up.com");
+            debug = AddUser("Malcom", "Mals", "Mally", "M@ll£y@gmail.com");
+            debug = AddUser("James", "Fidelnurr", "J@s", "James@gmail.com");
         }
     }
 }

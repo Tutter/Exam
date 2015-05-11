@@ -11,6 +11,7 @@ namespace Eksamensopgave15
         private DateTime seasonStartDate;
         private DateTime seasonEndDate;
 
+        //Constuctor that takes one date and checks if its an end or start date and then assigns it correctly
         public SeasonalProduct(int id, string name, int price, bool active, DateTime date)
             : base(id, name, price, active)
         {
@@ -24,6 +25,7 @@ namespace Eksamensopgave15
             }
         }
 
+        //Constructor that takes to dates and assigns them.
         public SeasonalProduct(int id, string name, int price, bool active, DateTime seasonStartDate, DateTime seasonEndDate)
             : base(id, name, price, active)
         {
