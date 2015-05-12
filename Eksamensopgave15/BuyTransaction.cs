@@ -25,7 +25,7 @@ namespace Eksamensopgave15
 
         public override string ToString()
         {
-            return base.ToString() + "; Bought " + product.name + " from the user: " + user.userName + " \n";
+            return base.ToString() + "; Bought " + product.name + " from the user: " + user.username + " \n";
         }
 
         public override void Execute()

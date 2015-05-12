@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Eksamensopgave15
 {
-    class TransactionLogging
+    class TransactionLogging : ITransactionLog
     {
         private string path;
 

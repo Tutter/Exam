@@ -20,6 +20,7 @@ namespace Eksamensopgave15
             FillAdminDictionary();
         }
 
+        //Handles commands
         public void ParseCommand()
         {
             string[] currentCommand;
@@ -28,12 +29,14 @@ namespace Eksamensopgave15
             currentCommand = GetUserInput();
             numOfArguments = currentCommand.Count();
             
+            //If the command has the character ':' in it treat it as an admin command
             if (currentCommand[0].Contains(':'))
             {
                 HandleAdminCommand(currentCommand, numOfArguments);
                 return;
             }
 
+            //Switch based on how many strings are in currentCommand
             switch (numOfArguments)
             {
                 case 1:
@@ -51,6 +54,7 @@ namespace Eksamensopgave15
             }
         }
 
+        //Fills the admin dictionary with key/value pairs
         private void FillAdminDictionary()
         {
             adminCommands.Add(":quit", new Action(stregsystemCLI.Close));
@@ -62,11 +66,13 @@ namespace Eksamensopgave15
             adminCommands.Add(":addcredits", new Action<string, int>(InsertCashAdminCommand));
         }
 
+        //Handles admin commands
         private void HandleAdminCommand(string[] currentCommand, int numOfArguments)
         {
             int productId = 0;
             int amountOfCredits = 0;
 
+            //If the dictionary does not contain the given string as a key then display error and return
             if(!adminCommands.ContainsKey(currentCommand[0]))
             {
                 stregsystemCLI.DisplayAdminCommandNotFoundMessage();
@@ -75,14 +81,18 @@ namespace Eksamensopgave15
 
             try
             {
+                //Switch based on how many strings are in currentCommand
                 switch (numOfArguments)
                 {
+                    //If numOfArguments is 1 then the command can only be a quit command
                     case 1:
                         adminCommands[currentCommand[0]].DynamicInvoke();
                         break;
+                    //If numOfArguments is 2 then the command either activating or deactivating certain properties of a product
                     case 2:
                         Int32.TryParse(currentCommand[1], out productId);
-
+                        
+                        //If the product id is less than one then display not valid product id
                         if (productId < 1)
                         {
                             stregsystemCLI.DisplayNotValidProductID();
@@ -92,9 +102,11 @@ namespace Eksamensopgave15
                             adminCommands[currentCommand[0]].DynamicInvoke(productId);
                         }
                         break;
+                    //If numOfArguments is 3 then the command can only be an insert credit command
                     case 3:
                         Int32.TryParse(currentCommand[2], out amountOfCredits);
 
+                        //If the amount of credits is less than 1 then display not valid amount of credits
                         if (amountOfCredits < 1)
                         {
                             stregsystemCLI.DisplayNotValidCreditAmount();
@@ -109,35 +121,39 @@ namespace Eksamensopgave15
                         break;
                 }         
             }
+            //Catches all exceptions in the admin command handling and displays admin command not found if it does
             catch
             {
                 stregsystemCLI.DisplayAdminCommandNotFoundMessage();
             }       
         }
 
-        private void InsertCashAdminCommand(string userName, int amount)
+        //Inserts credits to a users account
+        private void InsertCashAdminCommand(string username, int amount)
         {
             User user;
             
             try
             {
-                user = stregsystem.GetUser(userName);
+                user = stregsystem.GetUser(username);
             }
             catch (UserNotFoundException e)
             {
-                stregsystemCLI.DisplayUserNotFound(e.userName);
+                stregsystemCLI.DisplayUserNotFound(e.username);
                 return;
             }
 
             stregsystem.AddCreditsToAccount(user, amount * 100);
-            stregsystemCLI.DisplayInsertedCashToUser(user.userName, amount);
+            stregsystemCLI.DisplayInsertedCashToUser(user.username, amount);
         }
 
+        //Gets user input
         private string[] GetUserInput()
         {
             return Console.ReadLine().Split(' ');
         }
 
+        //Displays information about a given user
         private void UserInfoCommand(string[] currentCommand)
         {
             try
@@ -146,10 +162,11 @@ namespace Eksamensopgave15
             }
             catch (UserNotFoundException e)
             {
-                stregsystemCLI.DisplayUserNotFound(e.userName);
+                stregsystemCLI.DisplayUserNotFound(e.username);
             }
         }
 
+        //Buys a single product from a users account
         private void BuyProductCommand(string[] currentCommand)
         {
             User user;
@@ -158,6 +175,8 @@ namespace Eksamensopgave15
             BuyTransaction transaction;
 
             Int32.TryParse(currentCommand[1], out productId);
+            
+            //If the product id is less than one then display not valid product id
             if (productId < 1)
             {
                 stregsystemCLI.DisplayNotValidProductID();
@@ -173,7 +192,7 @@ namespace Eksamensopgave15
 
             catch (UserNotFoundException e)
             {
-                stregsystemCLI.DisplayUserNotFound(e.userName);
+                stregsystemCLI.DisplayUserNotFound(e.username);
                 return;
             }
 
@@ -185,13 +204,18 @@ namespace Eksamensopgave15
 
             catch (InsufficientCreditsException e)
             {
-                stregsystemCLI.DisplayInsufficientCash(e.user.userName, e.product.name);
+                stregsystemCLI.DisplayInsufficientCash(e.user.username, e.product.name);
                 return;
             }
 
             stregsystemCLI.DisplayUserBuysProduct(transaction);
+            if (user.balance < 50000)
+            {
+                stregsystemCLI.DisplayBalanceUnderFifty(user);
+            }
         }
 
+        //Buys multiple products from a users account
         private void BuyMultipleProductCommand(string[] currentCommand)
         {
             User user;
@@ -201,6 +225,7 @@ namespace Eksamensopgave15
             BuyTransaction transaction;
 
             Int32.TryParse(currentCommand[1], out amount);
+            //If the amount of credits is less than 1 then display not valid amount of credits
             if (amount < 1)
             {
                 stregsystemCLI.DisplayNotValidAmountOfProduct();
@@ -208,6 +233,7 @@ namespace Eksamensopgave15
             }
 
             Int32.TryParse(currentCommand[2], out productId);
+            //If the product id is less than one then display not valid product id
             if (productId < 1)
             {
                 stregsystemCLI.DisplayNotValidProductID();
@@ -223,7 +249,7 @@ namespace Eksamensopgave15
 
             catch (UserNotFoundException e)
             {
-                stregsystemCLI.DisplayUserNotFound(e.userName);
+                stregsystemCLI.DisplayUserNotFound(e.username);
                 return;
             }
 
@@ -235,11 +261,15 @@ namespace Eksamensopgave15
 
             catch (InsufficientCreditsException e)
             {
-                stregsystemCLI.DisplayInsufficientCash(e.user.userName, e.product.name);
+                stregsystemCLI.DisplayInsufficientCash(e.user.username, e.product.name);
                 return;
             }
 
             stregsystemCLI.DisplayUserBuysProduct(transaction, amount);
+            if (user.balance < 50000)
+            {
+                stregsystemCLI.DisplayBalanceUnderFifty(user);
+            }
         }
     }
 }

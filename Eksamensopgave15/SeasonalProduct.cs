@@ -11,26 +11,17 @@ namespace Eksamensopgave15
         private DateTime seasonStartDate;
         private DateTime seasonEndDate;
 
-        //Constuctor that takes one date and checks if its an end or start date and then assigns it correctly
-        public SeasonalProduct(int id, string name, int price, bool active, DateTime date)
-            : base(id, name, price, active)
-        {
-            if (date > DateTime.Now)
-            {
-                seasonEndDate = date;
-            }
-            else
-            {
-                seasonStartDate = date;
-            }
-        }
-
-        //Constructor that takes to dates and assigns them.
-        public SeasonalProduct(int id, string name, int price, bool active, DateTime seasonStartDate, DateTime seasonEndDate)
-            : base(id, name, price, active)
+        //Constructor that takes to dates and assigns them
+        public SeasonalProduct(int id, string name, int price, DateTime seasonStartDate, DateTime seasonEndDate)
+            : base(id, name, price, false)
         {
             this.seasonStartDate = seasonStartDate;
             this.seasonEndDate = seasonEndDate;
+
+            if ((seasonStartDate < DateTime.Now || seasonStartDate == null) && (seasonEndDate > DateTime.Now || seasonEndDate == null))
+            {
+                this.active = true;
+            }
         }
     }
 }

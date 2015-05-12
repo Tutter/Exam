@@ -117,7 +117,7 @@ namespace Eksamensopgave15
         {
             foreach (User user in users)
             {
-                if (user.userName == userName)
+                if (user.username == userName)
                     return false;
             }
 
@@ -129,21 +129,10 @@ namespace Eksamensopgave15
         {
             foreach (User user in users)
             {
-                if (user.userName == username)
+                if (user.username == username)
                     return user;
             }
             throw new UserNotFoundException(username);
-        }
-
-        //Reads a user by username and returns a string with information
-        public string ReadUser(string userName)
-        {
-            foreach (User user in users)
-            {
-                if (user.userName == userName)
-                    return "ID: " + user.id + "\nName: " + user.firstName + " " + user.lastName + "\nUsername: " + user.userName + "\nEmail: " + user.email;
-            }
-            throw new UserNotFoundException(userName);
         }
 
         //Fills the userlist with some users

@@ -46,9 +46,9 @@ namespace Eksamensopgave15
             Console.WriteLine();
         }
 
-        public void DisplayUserNotFound(string userName)
+        public void DisplayUserNotFound(string username)
         {
-            Console.WriteLine("The user: " + userName + " was not found");
+            Console.WriteLine("The user: " + username + " was not found");
         }
 
         public void DisplayProductNotFound(int productId)
@@ -67,19 +67,19 @@ namespace Eksamensopgave15
         }
 
         //Displays information about a user by username
-        public void DisplayUserInfo(string userName)
+        public void DisplayUserInfo(string username)
         {
-            User user = stregsystem.userList.GetUserByUsername(userName);
+            User user = stregsystem.userList.GetUserByUsername(username);
             Console.WriteLine(user.ToString() + "\nUser's balance: " + ((float)user.balance/100) + "kr");
             DisplayBalanceUnderFifty(user);
             DisplayUserLastTenTransactions(user);
         }
 
         //Displays a message if the user has a balance under 50kr
-        private void DisplayBalanceUnderFifty(User user)
+        public void DisplayBalanceUnderFifty(User user)
         {
             if (user.balance < 5000)
-                Console.WriteLine(user.userName + "'s balance is under 50kr");
+                Console.WriteLine("User's balance is under 50kr");
         }
 
         public void DisplayTooManyArgumentsError()
@@ -95,18 +95,18 @@ namespace Eksamensopgave15
         //Overloaded method that displays a message when a user buys a single product
         public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
-            Console.WriteLine("User: " + transaction.user.userName + " bought " + transaction.product.name);
+            Console.WriteLine("User: " + transaction.user.username + " bought " + transaction.product.name);
         }
 
         //Overlaoded method that displays a message when a user buys multiple products
         public void DisplayUserBuysProduct(BuyTransaction transaction, int amount)
         {
-            Console.WriteLine("User: " + transaction.user.userName + " bought " + amount + " of " + transaction.product.name);
+            Console.WriteLine("User: " + transaction.user.username + " bought " + amount + " of " + transaction.product.name);
         }
 
-        public void DisplayInsertedCashToUser(string userName, int amount)
+        public void DisplayInsertedCashToUser(string username, int amount)
         {
-            Console.WriteLine("Inserted " + amount + " kr into user: " + userName + "'s account");
+            Console.WriteLine("Inserted " + amount + " kr into user: " + username + "'s account");
         }
 
         public void DisplayNotValidCreditAmount()
@@ -121,9 +121,9 @@ namespace Eksamensopgave15
             running = false;
         }
 
-        public void DisplayInsufficientCash(string userName, string productName)
+        public void DisplayInsufficientCash(string username, string productName)
         {
-            Console.WriteLine("User: " + userName + " has insufficient credits for " + productName);
+            Console.WriteLine("User: " + username + " has insufficient credits for " + productName);
         }
 
         public void DisplayGeneralError(string errorString)
@@ -134,7 +134,7 @@ namespace Eksamensopgave15
         //Displays a given users latest ten transactions
         private void DisplayUserLastTenTransactions(User user)
         {
-            List<string[]> transactions = stregsystem.GetTransactionList(10, user.userName);
+            List<string[]> transactions = stregsystem.GetTransactionList(10, user.username);
 
             foreach (string[] str in transactions)
             {

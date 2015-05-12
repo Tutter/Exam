@@ -68,15 +68,15 @@ namespace Eksamensopgave15
         }
 
         //Gets a user by username
-        public User GetUser(string userName)
+        public User GetUser(string username)
         {
-            return userList.GetUserByUsername(userName);
+            return userList.GetUserByUsername(username);
         }
 
         //Gets a list of a specified number of transactions
-        public List<string[]> GetTransactionList(int numOfTransactions, string userName)
+        public List<string[]> GetTransactionList(int numOfTransactions, string username)
         {
-            return transactionLogging.GetTransactionsFromLog(numOfTransactions, userName);
+            return transactionLogging.GetTransactionsFromLog(numOfTransactions, username);
         }
 
         //Gets active products

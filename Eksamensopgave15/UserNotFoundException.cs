@@ -8,11 +8,11 @@ namespace Eksamensopgave15
 {
     class UserNotFoundException : Exception
     {
-        public string userName;
-        public UserNotFoundException(string userName)
+        public string username;
+        public UserNotFoundException(string username)
         {
 
-            this.userName = userName;
+            this.username = username;
         }
     }
 }
